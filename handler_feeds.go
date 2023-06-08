@@ -34,5 +34,5 @@ func (apiCfg *apiConfig) HandlerCreateFeeds(w http.ResponseWriter, r *http.Reque
 	if err != nil {
 		respondWithJSON(w, 403, err)
 	}
-	respondWithJSON(w, 201, feeds)
+	respondWithJSON(w, 201, databaseFeedsToFeeds(feeds))
 }
