@@ -24,11 +24,12 @@ func (apiConfig *apiConfig) HandlerCreateUser(w http.ResponseWriter, r *http.Req
 	user, err := apiConfig.DB.CreateUser(r.Context(), database.CreateUserParams{
 		ID:        uuid.New(),
 		CreatedAt: time.Now().UTC(),
+		UpdatedAt: time.Now().UTC(),
 		Name:      params.Name,
 	})
 	if err != nil {
 		respondWithJSON(w, 400, fmt.Sprintf("Couldn't create user: %s", err))
 		return
 	}
-	respondWithJSON(w, 200, user)
+	respondWithJSON(w, 200, databaseUserToUser(user))
 }
