@@ -32,7 +32,8 @@ func (apiCfg *apiConfig) HandlerCreateFeeds(w http.ResponseWriter, r *http.Reque
 		Url:       params.Url,
 	})
 	if err != nil {
-		respondWithJSON(w, 403, err)
+		respondWithError(w, 403, err.Error())
+		return
 	}
 	respondWithJSON(w, 201, databaseFeedToFeed(feeds))
 }
@@ -40,7 +41,8 @@ func (apiCfg *apiConfig) HandlerCreateFeeds(w http.ResponseWriter, r *http.Reque
 func (apiCfg *apiConfig) HandlerGetFeeds(w http.ResponseWriter, r *http.Request, user database.User) {
 	feeds, err := apiCfg.DB.GetFeeds(r.Context(), user.ID)
 	if err != nil {
-		respondWithJSON(w, 403, err)
+		respondWithError(w, 403, err.Error())
+		return
 	}
 	respondWithJSON(w, 201, databaseFeedsToFeeds(feeds))
 }
